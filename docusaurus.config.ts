@@ -64,7 +64,7 @@ const config: Config = {
       title: 'Godot MEDS Docs',
       logo: {
         alt: 'Godot MEDS Docs Logo',
-        src: 'img/meds.png',
+        src: 'img/meds-no-text.png',
       },
       items: [
         {
