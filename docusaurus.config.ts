@@ -61,10 +61,10 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'Godot MEDS Docs',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'Godot MEDS Docs Logo',
+        src: 'img/meds.png',
       },
       items: [
         {
