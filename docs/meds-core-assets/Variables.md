@@ -4,6 +4,8 @@ sidebar_position: 1
 
 # Variables
 
+![alt text](../../static/img/variables.png)
+
 Variables are `Resources` that hold a typed value and emit a signal when the value changes.
 
 Available variable types (scripts live under `addons/godot_meds_core/scripts/variables/`):

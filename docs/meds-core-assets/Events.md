@@ -4,6 +4,8 @@ sidebar_position: 2
 
 # Events
 
+![alt text](../../static/img/event.png)
+
 Events are `Resources` that expose a single signal and a method to emit it.
 
 - Script: `addons/godot_meds_core/scripts/events/event.gd`
