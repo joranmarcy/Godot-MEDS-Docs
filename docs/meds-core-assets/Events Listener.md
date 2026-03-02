@@ -4,20 +4,73 @@ sidebar_position: 3
 
 # Event Listener
 
-You have just learned the **basics of Docusaurus** and made some changes to the **initial template**.
+This sample script turns a `Event` resource into a scene-level signal you can easily connect to from the editor.
 
-Docusaurus has **much more to offer**!
+- Script: `samples/scripts/event-listener.gd`
+- Exported fields:
+  - `event: Event`
+- Signals:
+  - `event_raised()` (re-emitted when the assigned `Event` is raised)
 
-Have **5 more minutes**? Take a look at **[versioning](../tutorial-extras/manage-docs-versions.md)** and **[i18n](../tutorial-extras/translate-your-site.md)**.
+## Why this exists
 
-Anything **unclear** or **buggy** in this tutorial? [Please report it!](https://github.com/facebook/docusaurus/discussions/4610)
+You can always connect to an `Event` resource directly from code (see `docs/events.md`).
 
-## What's next?
+This wrapper is useful when you want to:
 
-- Read the [official documentation](https://docusaurus.io/)
-- Modify your site configuration with [`docusaurus.config.js`](https://docusaurus.io/docs/api/docusaurus-config)
-- Add navbar and footer items with [`themeConfig`](https://docusaurus.io/docs/api/themes/configuration)
-- Add a custom [Design and Layout](https://docusaurus.io/docs/styling-layout)
-- Add a [search bar](https://docusaurus.io/docs/search)
-- Find inspirations in the [Docusaurus showcase](https://docusaurus.io/showcase)
-- Get involved in the [Docusaurus Community](https://docusaurus.io/community/support)
+- Drop a listener node into a scene and wire connections from the **Node** tab.
+- Keep your scene logic listening to a *node signal* instead of a *resource signal*.
+
+## Setup (in the editor)
+
+1. Create an `Event` resource (a `.tres`).
+2. Add a `Node` (or `Node3D`) to your scene.
+3. Attach `samples/scripts/event-listener.gd`.
+4. Assign your `.tres` to the exported `event` field.
+5. Connect the node’s `event_raised` signal to any method you want.
+
+Important: this script expects `event` to be assigned (non-null).
+
+## Setup (in code)
+
+```gdscript
+extends Node
+
+@onready var listener := $EventListener
+
+func _ready() -> void:
+	listener.event_raised.connect(_on_event)
+
+func _on_event() -> void:
+	print("Event received via wrapper node")
+````
+
+The companion sample script `samples/scripts/raise-event.gd` raises the same `Event` resource:
+
+```gdscript
+extends Node
+
+@export var event: Event
+
+func trigger() -> void:
+	event.raise_event()
+```
+
+To test the full flow:
+
+- Create one `Event` `.tres`.
+- Assign it to both:
+  - a node with `event-listener.gd`
+  - a node with `raise-event.gd`
+- Call `trigger()` (or `raise_event()`, depending on your own script) and observe the listener firing.
+
+## Debugging
+
+- If `debug_logs` is enabled on the `Event` resource, raising it prints a rich debug log.
+- When the **Godot Flow Extensions** plugin is enabled, the **Events** dock shows listener counts and raise counts.
+
+See also:
+
+- `docs/events.md`
+- `docs/events-dock.md`
+
