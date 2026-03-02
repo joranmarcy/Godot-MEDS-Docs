@@ -4,6 +4,8 @@ sidebar_position: 2
 
 # Events Runtime Debugger
 
+![alt text](../../static/img/event-debugger-dock.gif)
+
 A dock named **Events** shows events that are discovered/registered at runtime.
 
 - Shows listener count and how many times each event was raised.

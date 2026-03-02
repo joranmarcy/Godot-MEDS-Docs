@@ -4,6 +4,8 @@ sidebar_position: 1
 
 # Variables Runtime Debugger
 
+![alt text](../../static/img/variables-debugger-dock.gif)
+
 A dock named **Variable Values** shows any variables that report values during runtime.
 
 - Live-updates as values change.
