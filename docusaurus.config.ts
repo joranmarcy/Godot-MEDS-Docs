@@ -17,12 +17,12 @@ const config: Config = {
   url: 'https://joranmarcy.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/godot-meds-docs/',
+  baseUrl: '/Godot-MEDS-Docs/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'joranmarcy', // Usually your GitHub org/user name.
-  projectName: 'godot-meds-docs', // Usually your repo name.
+  projectName: 'Godot-MEDS-Docs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
 
@@ -43,7 +43,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/joranmarcy/godot-meds-docs/tree/main/',
+            'https://github.com/joranmarcy/Godot-MEDS-Docs/tree/main/',
         },
         blog: false,
         theme: {
@@ -73,7 +73,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/joranmarcy/Godot-MEDS-Docs',
           label: 'GitHub',
           position: 'right',
         },
