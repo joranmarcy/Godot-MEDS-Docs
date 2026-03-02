@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Variables
 
-![alt text](../../static/img/variables.png)
+![alt text](../../static/img/float-variable.png)
 
 Variables are `Resources` that hold a typed value and emit a signal when the value changes.
 
