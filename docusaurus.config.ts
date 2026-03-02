@@ -5,8 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'Godot MEDS',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -61,9 +60,9 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Godot MEDS Docs',
+      title: 'Godot MEDS',
       logo: {
-        alt: 'Godot MEDS Docs Logo',
+        alt: 'Godot MEDS Logo',
         src: 'img/meds-no-text.png',
       },
       items: [
