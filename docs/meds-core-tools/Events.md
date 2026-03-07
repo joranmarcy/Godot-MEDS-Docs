@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Events
 
-![alt text](../../static/img/event.png)
+![alt text](../../static/img/1772907090390.png)
 
 Events are `Resources` that expose a single signal and a method to emit it.
 

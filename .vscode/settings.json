@@ -1,5 +1,5 @@
 {
     "markdown.copyFiles.destination": {
-        "*.md": "/static/img/${fileName} "
+        "*.md": "/static/img/${unixTime}.${fileExtName}"
     }
 }
