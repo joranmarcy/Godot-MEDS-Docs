@@ -4,19 +4,20 @@ sidebar_position: 1
 
 # Variables
 
-![alt text](../../static/img/1772907053951.png)
-
 Variables are `Resources` that hold a typed value and emit a signal when the value changes.
 
 Available variable types (scripts live under `addons/godot_meds_core/scripts/variables/`):
 
-- `BoolVariable`
-- `IntVariable`
-- `FloatVariable`
-- `StringVariable`
-- `ColorVariable`
-- `Vector2Variable`
-- `Vector3Variable`
+| Icon | Type | Notes |
+| --- | --- | --- |
+| ![BaseVariable icon](/img/variables/BaseVariable.svg) | `BaseVariable` | Shared base resource for all variable types |
+| ![BoolVariable icon](/img/variables/BoolVariable.svg) | `BoolVariable` | Stores a `bool` |
+| ![IntVariable icon](/img/variables/IntVariable.svg) | `IntVariable` | Stores an `int` |
+| ![FloatVariable icon](/img/variables/FloatVariable.svg) | `FloatVariable` | Stores a `float` |
+| ![StringVariable icon](/img/variables/StringVariable.svg) | `StringVariable` | Stores a `String` |
+| ![ColorVariable icon](/img/variables/ColorVariable.svg) | `ColorVariable` | Stores a `Color` |
+| ![Vector2Variable icon](/img/variables/Vector2Variable.svg) | `Vector2Variable` | Stores a `Vector2` |
+| ![Vector3Variable icon](/img/variables/Vector3Variable.svg) | `Vector3Variable` | Stores a `Vector3` |
 
 Common API (implemented via `BaseVariable`):
 
