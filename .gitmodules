@@ -1,0 +1,3 @@
+[submodule "godot-meds-sources"]
+	path = godot-meds-sources
+	url = https://github.com/joranmarcy/Godot-MEDS-Sample.git
