@@ -8,6 +8,8 @@ The MEDS sample is a small Godot project that demonstrates how variables, events
 
 If you want to see MEDS in action quickly, this is the best place to start.
 
+![alt text](../../static/img/1775322823110.png)
+
 ## What the sample shows
 
 - resource-driven game state through `.tres` variables such as `robot-health.tres`, `robot-rotation.tres`, and `robot-name.tres`
