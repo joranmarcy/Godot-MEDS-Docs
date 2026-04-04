@@ -6,47 +6,82 @@ sidebar_position: 1
 
 Variables are `Resources` that hold a typed value and emit a signal when the value changes.
 
-Variable classes (scripts live under `addons/godot_meds_core/scripts/variables/`):
+Most variable scripts live under `addons/godot_meds_core/scripts/variables/`.
 
-| Icon | Type | Extends | Notes |
+## At a glance
+
+- Every typed variable exposes a typed `value`, a typed `set_value(...)` helper, and a `value_changed(...)` signal.
+- `BaseVariable` provides the shared runtime behavior.
+- `NumericVariable` adds shared numeric rules for `FloatVariable` and `IntVariable`.
+
+## Class hierarchy
+
+| Icon | Type | Extends | Purpose |
 | --- | --- | --- | --- |
 | ![BaseVariable icon](/img/variables/BaseVariable.svg) | `BaseVariable` | `Resource` | Shared base resource for all variable types |
-| ![BaseVariable icon](/img/variables/BaseVariable.svg) | `NumericVariable` | `BaseVariable` | Shared numeric base for `FloatVariable` and `IntVariable` |
-| ![BoolVariable icon](/img/variables/BoolVariable.svg) | `BoolVariable` | `BaseVariable` | Stores a `bool` |
-| ![IntVariable icon](/img/variables/IntVariable.svg) | `IntVariable` | `NumericVariable` | Stores an `int` with optional clamping and range metadata |
-| ![FloatVariable icon](/img/variables/FloatVariable.svg) | `FloatVariable` | `NumericVariable` | Stores a `float` with optional clamping and range metadata |
-| ![StringVariable icon](/img/variables/StringVariable.svg) | `StringVariable` | `BaseVariable` | Stores a `String` |
-| ![ColorVariable icon](/img/variables/ColorVariable.svg) | `ColorVariable` | `BaseVariable` | Stores a `Color` |
-| ![Vector2Variable icon](/img/variables/Vector2Variable.svg) | `Vector2Variable` | `BaseVariable` | Stores a `Vector2` |
-| ![Vector3Variable icon](/img/variables/Vector3Variable.svg) | `Vector3Variable` | `BaseVariable` | Stores a `Vector3` |
+| ![BaseVariable icon](/img/variables/BaseVariable.svg) | `NumericVariable` | `BaseVariable` | Shared numeric behavior for clamped float and int variables |
 
-Common API (implemented via `BaseVariable`):
+## Typed variables
 
-- `value` property (typed per variable)
-- `value_changed(new_value)` signal
-- `initial_value` exported property
-- `debug_logs` exported bool: when enabled, logs value changes + a stack trace + which listeners are connected
-- `save_to_device` exported bool: persists changes to `user://settings.cfg` and reloads on startup
-- `reset_on` exported enum: controls when the variable resets
-- `reset_on = "On Scene Load"` resets on each scene load
-- `reset_on = "On Application Start"` keeps the runtime value cached across scene loads until the app restarts
-- persisted values are stored in section `variables`
-- persisted keys use the variable's `resource_path.get_basename()`
+| Icon | Type | Value type | Notes |
+| --- | --- | --- | --- |
+| ![BoolVariable icon](/img/variables/BoolVariable.svg) | `BoolVariable` | `bool` | Basic boolean state |
+| ![IntVariable icon](/img/variables/IntVariable.svg) | `IntVariable` | `int` | Optional clamping and range metadata |
+| ![FloatVariable icon](/img/variables/FloatVariable.svg) | `FloatVariable` | `float` | Optional clamping and range metadata |
+| ![StringVariable icon](/img/variables/StringVariable.svg) | `StringVariable` | `String` | Text values |
+| ![ColorVariable icon](/img/variables/ColorVariable.svg) | `ColorVariable` | `Color` | Colors and tints |
+| ![Vector2Variable icon](/img/variables/Vector2Variable.svg) | `Vector2Variable` | `Vector2` | 2D positions and directions |
+| ![Vector3Variable icon](/img/variables/Vector3Variable.svg) | `Vector3Variable` | `Vector3` | 3D positions and directions |
 
-Numeric API (implemented via `NumericVariable`, `FloatVariable`, and `IntVariable`):
+## Common API
 
-- `clamp_value` exported bool: enables runtime clamping
-- `min_value` and `max_value` exported properties on `FloatVariable` and `IntVariable`
-- `range_changed(clamp_enabled, min_value, max_value)` signal on `FloatVariable` and `IntVariable`
-- both `initial_value` and runtime `value` assignments are sanitized through the numeric clamp rules
+The following behavior comes from `BaseVariable` and applies to every typed variable resource.
+
+| Member | Purpose |
+| --- | --- |
+| `value` | The current typed runtime value |
+| `value_changed(new_value)` | Signal emitted when the value changes |
+| `initial_value` | Exported starting value used when the resource is initialized |
+| `debug_logs` | Logs value changes, listeners, and caller context |
+| `save_to_device` | Persists the value to `user://settings.cfg` and restores it on load |
+| `reset_on` | Controls whether the value resets on scene load or only when the application starts |
+
+`reset_on` supports two modes:
+
+- `On Scene Load`: reset when a new scene is loaded.
+- `On Application Start`: keep the runtime value cached across scene changes until the app restarts.
+
+When `save_to_device` is enabled, values are stored in the `variables` section of `user://settings.cfg` using the resource path basename as the key.
+
+## Numeric behavior
+
+`NumericVariable` is the shared base for `FloatVariable` and `IntVariable`.
+
+| Member | Purpose |
+| --- | --- |
+| `clamp_value` | Enables runtime clamping |
+| `min_value` | Lower bound for numeric values |
+| `max_value` | Upper bound for numeric values |
+| `range_changed(clamp_enabled, min_value, max_value)` | Signal emitted when numeric range settings change |
+
+Both `initial_value` and runtime `value` assignments are sanitized through the numeric clamp rules.
 
 ## Creating a variable resource
 
 1. In the FileSystem dock: **Right click → New Resource…**
-2. Pick e.g. `BoolVariable` and save it as a `.tres`.
-3. Assign that `.tres` to exported fields in scripts.
+2. Pick a typed resource such as `BoolVariable`, `FloatVariable`, or `StringVariable`.
+3. Save it as a `.tres`.
+4. Assign that `.tres` to exported fields in scripts.
 
-## Using variables in scripts
+:::tip
+Use `FloatVariable` or `IntVariable` when you want sliders, progress bars, or other UI to react to value ranges.
+:::
+
+## Script examples
+
+### Basic variable usage
+
+This example connects to a `BoolVariable` and reads its current value.
 
 ```gdscript
 extends Node
@@ -61,13 +96,15 @@ func _on_bool_changed(new_value: bool) -> void:
 	print("Bool changed to:", new_value)
 ```
 
-When you want better debug output that includes the caller, prefer the typed helper method:
+When you want debug output to include the caller, prefer the typed helper method:
 
 ```gdscript
 bool_variable.set_value(true, self)
 ```
 
-For numeric variables, you can configure clamping directly on the resource:
+### Numeric variable usage
+
+This example shows a `FloatVariable` with range notifications and a typed setter.
 
 ```gdscript
 @export var health: FloatVariable
