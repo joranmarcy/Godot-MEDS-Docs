@@ -14,6 +14,16 @@ Most binding scripts live under `addons/godot_meds_core/scripts/ui/`.
 - Some bindings are one-way display bindings, while others are two-way editor bindings.
 - `variable-driven-*` scripts are the current generic bindings.
 
+## Which binding should I use?
+
+| If you want to... | Use this script |
+| --- | --- |
+| Toggle a `BoolVariable` from a checkbox | `bool-driven-checkbox.gd` |
+| Edit a `ColorVariable` from a color picker | `color-driven-color-picker.gd` |
+| Show any variable as text in a label | `variable-driven-label.gd` |
+| Edit a `FloatVariable` or `IntVariable` from a slider | `variable-driven-slider.gd` |
+| Display a `FloatVariable` or `IntVariable` in a progress bar | `variable-driven-progress-bar.gd` |
+
 ## Basic usage
 
 1. Add the target UI control, such as a `CheckBox`, `Label`, `Slider`, or `ProgressBar`.
@@ -23,13 +33,13 @@ Most binding scripts live under `addons/godot_meds_core/scripts/ui/`.
 
 ## Current bindings
 
-| Script | Attach to | Exported property | Direction | Notes |
-| --- | --- | --- | --- | --- |
-| `addons/godot_meds_core/scripts/ui/bool-driven-checkbox.gd` | `CheckBox` | `bool_var: BoolVariable` | Two-way | Checkbox state updates the variable, and variable changes update the checkbox |
-| `addons/godot_meds_core/scripts/ui/color-driven-color-picker.gd` | `ColorPickerButton` | `color_variable: ColorVariable` | Two-way | Picker changes update the variable, and variable changes update the picker |
-| `addons/godot_meds_core/scripts/ui/variable-driven-label.gd` | `Label` | `variable: BaseVariable` | One-way | Displays any variable value as text, with optional `prefix` and `suffix` |
-| `addons/godot_meds_core/scripts/ui/variable-driven-slider.gd` | `Slider` | `variable: NumericVariable` | Two-way | Syncs with `FloatVariable` or `IntVariable`, including clamp-aware ranges |
-| `addons/godot_meds_core/scripts/ui/variable-driven-progress-bar.gd` | `ProgressBar` | `variable: NumericVariable` | One-way | Displays `FloatVariable` or `IntVariable` values with clamp-aware bounds |
+| Script | Best for | Exported property | Direction |
+| --- | --- | --- | --- |
+| `addons/godot_meds_core/scripts/ui/bool-driven-checkbox.gd` | `CheckBox` + `BoolVariable` | `bool_var: BoolVariable` | Two-way |
+| `addons/godot_meds_core/scripts/ui/color-driven-color-picker.gd` | `ColorPickerButton` + `ColorVariable` | `color_variable: ColorVariable` | Two-way |
+| `addons/godot_meds_core/scripts/ui/variable-driven-label.gd` | `Label` + any variable type | `variable: BaseVariable` | One-way |
+| `addons/godot_meds_core/scripts/ui/variable-driven-slider.gd` | `Slider` + `FloatVariable` or `IntVariable` | `variable: NumericVariable` | Two-way |
+| `addons/godot_meds_core/scripts/ui/variable-driven-progress-bar.gd` | `ProgressBar` + `FloatVariable` or `IntVariable` | `variable: NumericVariable` | One-way |
 
 ## Binding behavior
 
@@ -37,7 +47,7 @@ Most binding scripts live under `addons/godot_meds_core/scripts/ui/`.
 
 `variable-driven-label.gd` works with any variable type because it reads the value as a `Variant` and formats it with `str(...)`.
 
-Available exports:
+Inspector exports:
 
 - `variable: BaseVariable`
 - `prefix: String = ""`: text added before the variable value
@@ -49,7 +59,7 @@ Available exports:
 
 This lets you add units, labels, or surrounding text without writing a custom script.
 
-Examples:
+Common label formats:
 
 - `prefix = "HP: "`, `suffix = ""` with value `75` becomes `HP: 75`
 - `prefix = ""`, `suffix = "%"` with value `42` becomes `42%`
@@ -66,7 +76,7 @@ This is useful for text like health counters, names, scores, or debug labels.
 
 `variable-driven-slider.gd` and `variable-driven-progress-bar.gd` both use `NumericVariable`.
 
-They automatically:
+Both scripts automatically:
 
 - read the current numeric value on startup
 - react to `value_changed(...)`
@@ -74,9 +84,9 @@ They automatically:
 - use the variable's `min_value` and `max_value` when `clamp_value` is enabled
 - switch the slider or progress step to `1.0` when the bound variable is an `IntVariable`
 
-Use `variable-driven-slider.gd` when the player should be able to edit the variable through the UI.
+Choose `variable-driven-slider.gd` when the player should be able to edit the variable through the UI.
 
-Use `variable-driven-progress-bar.gd` when the UI should only display the variable.
+Choose `variable-driven-progress-bar.gd` when the UI should only display the variable.
 
 ## Deprecated bindings
 
@@ -94,20 +104,32 @@ These older scripts still exist under `addons/godot_meds_core/scripts/ui/depreca
 
 Create a variable resource such as `health.tres` using `FloatVariable`.
 
-Attach `variable-driven-label.gd` to the label, then assign:
+Attach `variable-driven-label.gd` to the label and set:
 
 - `variable = health.tres`
 - `prefix = "HP: "`
+
+Result: if the variable value is `75`, the label shows `HP: 75`.
 
 ### Slider bound to a numeric variable
 
 Create a variable resource such as `music-volume.tres` using `FloatVariable`.
 
-Attach `variable-driven-slider.gd` to the slider, then assign:
+Attach `variable-driven-slider.gd` to the slider and set:
 
 - `variable = music-volume.tres`
 
 If `music-volume.tres` has `clamp_value` enabled, the slider range follows that variable's `min_value` and `max_value` automatically.
+
+### Progress bar bound to a numeric variable
+
+Create a variable resource such as `health.tres` using `IntVariable` or `FloatVariable`.
+
+Attach `variable-driven-progress-bar.gd` to the progress bar and set:
+
+- `variable = health.tres`
+
+If `health.tres` has `clamp_value` enabled, the progress bar uses the same `min_value` and `max_value` as the variable.
 
 ## Notes
 
