@@ -102,14 +102,16 @@ These older scripts still exist under `addons/godot_meds_core/scripts/ui/depreca
 
 ### Label bound to any variable
 
-Create a variable resource such as `health.tres` using `FloatVariable`.
+Create a variable resource such as `robot-name.tres` using `FloatVariable`.
 
 Attach `variable-driven-label.gd` to the label and set:
 
-- `variable = health.tres`
-- `prefix = "HP: "`
+- `variable = robot-name.tres`
+- `suffix = "rotation: "`
 
-Result: if the variable value is `75`, the label shows `HP: 75`.
+![alt text](../../static/img/1775322071261.gif)
+
+Result: if the variable value is `Georges`, the label shows `Georges rotation: `.
 
 ### Slider bound to a numeric variable
 
