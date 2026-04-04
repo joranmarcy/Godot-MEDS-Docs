@@ -115,13 +115,17 @@ Result: if the variable value is `Georges`, the label shows `Georges rotation: `
 
 ### Slider bound to a numeric variable
 
-Create a variable resource such as `music-volume.tres` using `FloatVariable`.
+Create a variable resource such as `robot-rotation.tres` using `FloatVariable`.
 
 Attach `variable-driven-slider.gd` to the slider and set:
 
-- `variable = music-volume.tres`
+- `variable = robot-rotation.tres`
 
-If `music-volume.tres` has `clamp_value` enabled, the slider range follows that variable's `min_value` and `max_value` automatically.
+![alt text](../../static/img/1775322380178.gif)
+
+If `robot-rotation.tres` has `clamp_value` enabled, the slider range follows that variable's `min_value` and `max_value` automatically.
+
+![alt text](../../static/img/1775322516536.gif)
 
 ### Progress bar bound to a numeric variable
 
