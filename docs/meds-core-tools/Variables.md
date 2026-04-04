@@ -73,6 +73,8 @@ Both `initial_value` and runtime `value` assignments are sanitized through the n
 3. Save it as a `.tres`.
 4. Assign that `.tres` to exported fields in scripts.
 
+![alt text](../../static/img/1775320804360.gif)
+
 :::tip
 Use `FloatVariable` or `IntVariable` when you want sliders, progress bars, or other UI to react to value ranges.
 :::
