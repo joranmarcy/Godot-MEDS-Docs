@@ -123,13 +123,15 @@ If `music-volume.tres` has `clamp_value` enabled, the slider range follows that 
 
 ### Progress bar bound to a numeric variable
 
-Create a variable resource such as `health.tres` using `IntVariable` or `FloatVariable`.
+Create a variable resource such as `robot-health.tres` using `IntVariable` or `FloatVariable`.
 
 Attach `variable-driven-progress-bar.gd` to the progress bar and set:
 
-- `variable = health.tres`
+- `variable = robot-health.tres`
 
 If `health.tres` has `clamp_value` enabled, the progress bar uses the same `min_value` and `max_value` as the variable.
+
+![alt text](../../static/img/1775321776921.gif)
 
 ## Notes
 
